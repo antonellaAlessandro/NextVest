@@ -1,0 +1,19 @@
+# Entorno virtual
+venv/
+
+# Variables de entorno — nunca subir
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs
+*.log
