@@ -2,9 +2,9 @@
 Broker digital para menores de edad que permite operaciones con instrumentos financieros. Ideal para adentrarse en el mundo de las inversiones desde pequeño.
 
 # Stack tecnológico
-Frontend: React
-Backend: FastAPI
-Base de datos: PostgreSQL
+-Frontend: React
+-Backend: FastAPI
+-Base de datos: PostgreSQL
 
 # Cómo correr el proyecto
 ```bash
@@ -17,7 +17,7 @@ uvicorn main:app --reload
 Copiar `.env.example` como `.env` y completar con tus datos.
 
 # Estructura 
--core --> configuarcion, bdd, seguridad
+-core --> configuracion, bdd, seguridad
 -models --> tablas de bdd
 -schemas --> validacion de datos
 -services --> logica de negocio
