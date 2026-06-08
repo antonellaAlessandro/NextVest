@@ -11,6 +11,7 @@ from models.token_autorizacion import TokenAutorizacion
 from models.billetera import Billetera
 from models.portafolio import Portafolio
 from schemas.usuario import RegistroIn, LoginIn
+from services.email_service import enviar_autorizacion_parental, enviar_cuenta_activada, enviar_cuenta_rechazada
 
 def calcular_edad(fecha_nacimiento: date) -> int:
     hoy = date.today()
@@ -41,13 +42,14 @@ def registrar_usuario(datos: RegistroIn, db: Session):
     db.add(usuario)
     db.flush()
 
-    db.add(RepresentanteLegal(
-        nombre=datos.representante.nombre,
-        apellido=datos.representante.apellido,
-        dni=datos.representante.dni,
-        email=datos.representante.email,
-        usuario_id=usuario.id
-    ))
+    rep = RepresentanteLegal(
+    nombre=datos.representante.nombre,
+    apellido=datos.representante.apellido,
+    dni=datos.representante.dni,
+    email=datos.representante.email,
+    usuario_id=usuario.id
+    )
+    db.add(rep)
 
     db.add(Billetera(saldo_disponible=0.0, usuario_id=usuario.id))
     db.add(Portafolio(valor_total=0.0, usuario_id=usuario.id))
@@ -55,7 +57,7 @@ def registrar_usuario(datos: RegistroIn, db: Session):
     token = _generar_token_parental(usuario.id, db)
     db.commit()
 
-    print(f"[DEV] Link de autorización: /auth/autorizar/{token.uuid}")
+    enviar_autorizacion_parental(rep.email, usuario.nombre, token.uuid)
 
     return {"mensaje": "Cuenta creada. Se envió email de autorización al representante legal."}
 
@@ -86,11 +88,15 @@ def autorizar_cuenta(token_uuid: str, accion: str, db: Session):
     if accion == "aprobar":
         usuario.estado_cuenta = "activa"
         db.commit()
+        enviar_cuenta_activada(usuario.email, usuario.nombre)
         return {"mensaje": "Cuenta activada correctamente"}
+        
     else:
         db.delete(usuario)
         db.commit()
+        enviar_cuenta_rechazada(usuario.email, usuario.nombre)
         return {"mensaje": "Cuenta rechazada y eliminada"}
+        
 
 def reenviar_token(email: str, db: Session):
     usuario = db.query(Usuario).filter(Usuario.email == email).first()
