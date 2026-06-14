@@ -5,7 +5,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from core.config import settings
-from core.database import get_db
+from core.database import obtener_db
 
 contexto_pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
 esquema_oauth2 = OAuth2PasswordBearer(tokenUrl="/auth/login")
@@ -28,7 +28,7 @@ def decodificar_token(token: str) -> dict:
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token inválido")
 
-def obtener_usuario_actual(token: str = Depends(esquema_oauth2), db: Session = Depends(get_db)):
+def obtener_usuario_actual(token: str = Depends(esquema_oauth2), db: Session = Depends(obtener_db)):
     from models.usuario import Usuario
     payload = decodificar_token(token)
     usuario_id = payload.get("sub")
@@ -41,7 +41,7 @@ def obtener_usuario_actual(token: str = Depends(esquema_oauth2), db: Session = D
         raise HTTPException(status_code=403, detail="Cuenta no activa")
     return usuario
 
-def obtener_admin_actual(token: str = Depends(esquema_oauth2), db: Session = Depends(get_db)):
+def obtener_admin_actual(token: str = Depends(esquema_oauth2), db: Session = Depends(obtener_db)):
     from models.admin import Administrador
     payload = decodificar_token(token)
     if payload.get("rol") != "admin":
