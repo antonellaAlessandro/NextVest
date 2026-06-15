@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, Double, ForeignKey
 from sqlalchemy.orm import relationship
 from core.database import Base
+from models.instrumento import Instrumento
 
 class Portafolio(Base):
     __tablename__ = "portafolios"
