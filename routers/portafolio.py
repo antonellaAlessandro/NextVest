@@ -31,6 +31,7 @@ def ver_portafolio(
             instrumento_id=inst.id,
             nombre=inst.nombre,
             ticker=inst.ticker,
+            tipo=inst.tipo,
             unidades=pos.unidades,
             precio_prom_compra=pos.precio_prom_compra,
             precio_actual=inst.precio_actual,

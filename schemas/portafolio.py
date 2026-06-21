@@ -5,6 +5,7 @@ class PosicionOut(BaseModel):
     instrumento_id: int
     nombre: str
     ticker: str
+    tipo: str
     unidades: int
     precio_prom_compra: float
     precio_actual: float
