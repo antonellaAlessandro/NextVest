@@ -3,6 +3,8 @@ from models.instrumento import Instrumento
 from models.usuario import Usuario
 from models.perfil_riesgo import PerfilRiesgo
 from datetime import date
+from models.admin import Administrador
+from core.security import hashear_contrasenia
 
 Base.metadata.create_all(bind=engine)
 db = SessionLocal()
@@ -27,7 +29,6 @@ for datos in instrumentos:
         print(f"Ya existe: {datos['nombre']}")
 
 db.commit()
-db.close()
 print("Seed completado")
 
 usuarios = db.query(Usuario).all()
@@ -41,3 +42,16 @@ for usuario in usuarios:
             usuario_id=usuario.id
         ))
         print(f"Perfil de riesgo creado para: {usuario.nombre}")
+
+admin_existente = db.query(Administrador).filter(Administrador.email == "admin@nextvest.com").first()
+if not admin_existente:
+    db.add(Administrador(
+        email="admin@nextvest.com",
+        contrasenia=hashear_contrasenia("Admin1234!")
+    ))
+    print("Admin creado: admin@nextvest.com / Admin1234!")
+else:
+    print("El admin ya existe")
+
+db.commit()
+db.close()
