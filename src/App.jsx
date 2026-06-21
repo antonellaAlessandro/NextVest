@@ -18,6 +18,7 @@ import Educacion from './pages/Publica/Educacion'
 import QuienesSomos from './pages/Publica/QuienesSomos'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminLogin from './pages/Admin/AdminLogin'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
 
       {/* Redirigir raíz al login */}
       <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }
