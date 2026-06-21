@@ -17,6 +17,7 @@ import Configuracion from './pages/Admin/Configuracion'
 import Educacion from './pages/Publica/Educacion'
 import QuienesSomos from './pages/Publica/QuienesSomos'
 import ProtectedRoute from './components/ProtectedRoute'
+import AdminLogin from './pages/Admin/AdminLogin'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Route path="/cuenta-pendiente" element={<CuentaPendiente />} />
       <Route path="/educacion" element={<Educacion />} />
       <Route path="/quienes-somos" element={<QuienesSomos />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
 
       {/* Rutas privadas menor */}
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
