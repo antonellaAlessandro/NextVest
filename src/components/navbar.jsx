@@ -1,14 +1,22 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 function Navbar() {
-  const { usuario, cerrarSesion } = useAuth()
+  const { cerrarSesion } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
 
   function handleCerrarSesion() {
     cerrarSesion()
     navigate('/login')
   }
+
+  const links = [
+    { to: '/mercado', label: 'Mercado' },
+    { to: '/portafolio', label: 'Portafolio' },
+    { to: '/billetera', label: 'Billetera' },
+    { to: '/mi-cuenta', label: 'Mi cuenta' }
+  ]
 
   return (
     <nav className="bg-white border-b border-gray-100 px-6 py-4">
@@ -18,18 +26,19 @@ function Navbar() {
         </Link>
 
         <div className="flex items-center gap-6">
-          <Link to="/mercado" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-            Mercado
-          </Link>
-          <Link to="/portafolio" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-            Portafolio
-          </Link>
-          <Link to="/billetera" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-            Billetera
-          </Link>
-          <Link to="/mi-cuenta" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-            Mi cuenta
-          </Link>
+          {links.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`text-sm transition-colors ${
+                location.pathname === link.to
+                  ? 'text-blue-600 font-medium'
+                  : 'text-gray-600 hover:text-blue-600'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
           <button
             onClick={handleCerrarSesion}
             className="text-sm text-red-500 hover:text-red-600 transition-colors"
