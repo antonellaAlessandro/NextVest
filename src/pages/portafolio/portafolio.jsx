@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { obtenerPortafolio } from '../../services/portafolio.service'
 import Navbar from '../../components/Navbar'
+import GraficoPortafolio from '../../components/GraficoPortafolio'
 
 function Portafolio() {
   const [portafolio, setPortafolio] = useState(null)
@@ -62,6 +63,10 @@ function Portafolio() {
               </span>
             </p>
           </div>
+        </div>
+
+        <div className="mb-8">
+            <GraficoPortafolio posiciones={portafolio?.posiciones} />
         </div>
 
         {portafolio?.posiciones?.length === 0 ? (
