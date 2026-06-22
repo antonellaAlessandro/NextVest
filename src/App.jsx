@@ -20,6 +20,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import AdminLogin from './pages/Admin/AdminLogin'
 import NotFound from './pages/NotFound'
 import Inicio from './pages/Inicio'
+import DetalleUsuario from './pages/Admin/DetalleUsuario'
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
       <Route path="/admin/usuarios" element={<ProtectedRoute admin><GestionUsuarios /></ProtectedRoute>} />
       <Route path="/admin/instrumentos" element={<ProtectedRoute admin><GestionInstrumentos /></ProtectedRoute>} />
       <Route path="/admin/configuracion" element={<ProtectedRoute admin><Configuracion /></ProtectedRoute>} />
+      <Route path="/admin/usuarios/:id" element={<ProtectedRoute admin><DetalleUsuario /></ProtectedRoute>} />
 
       {/* Redirigir raíz al login */}
       <Route path="/" element={<Inicio />} />
