@@ -1,8 +1,8 @@
 const COLORES = {
-  FCI: '#3b82f6',
-  Bono: '#8b5cf6',
-  Cedear: '#10b981',
-  Accion: '#f59e0b'
+  FCI: '#22d3ee',
+  Bono: '#a78bfa',
+  Cedear: '#34d399',
+  Accion: '#fbbf24'
 }
 
 function GraficoPortafolio({ posiciones }) {
@@ -36,12 +36,12 @@ function GraficoPortafolio({ posiciones }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm">
-      <h3 className="font-medium text-gray-800 mb-4">Distribución por tipo</h3>
+    <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
+      <h3 className="font-medium text-white mb-4">Distribución por tipo</h3>
 
       <div className="flex items-center gap-8">
         <svg viewBox="0 0 100 100" className="w-32 h-32">
-          {segmentos.map((seg, index) => {
+          {segmentos.map((seg) => {
             const inicio = coordenadasEnCirculo(seg.inicio)
             const fin = coordenadasEnCirculo(seg.fin)
             const grandeArco = seg.porcentaje > 50 ? 1 : 0
@@ -50,7 +50,7 @@ function GraficoPortafolio({ posiciones }) {
               <path
                 key={seg.tipo}
                 d={`M 50 50 L ${inicio.x} ${inicio.y} A 40 40 0 ${grandeArco} 1 ${fin.x} ${fin.y} Z`}
-                fill={COLORES[seg.tipo] || '#94a3b8'}
+                fill={COLORES[seg.tipo] || '#64748b'}
               />
             )
           })}
@@ -61,10 +61,10 @@ function GraficoPortafolio({ posiciones }) {
             <div key={seg.tipo} className="flex items-center gap-2">
               <div
                 className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: COLORES[seg.tipo] || '#94a3b8' }}
+                style={{ backgroundColor: COLORES[seg.tipo] || '#64748b' }}
               />
-              <p className="text-sm text-gray-600">
-                {seg.tipo} <span className="text-gray-400">({seg.porcentaje.toFixed(0)}%)</span>
+              <p className="text-sm text-slate-300">
+                {seg.tipo} <span className="text-slate-500">({seg.porcentaje.toFixed(0)}%)</span>
               </p>
             </div>
           ))}

@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { obtenerSaldo, cargarSaldo } from '../../services/billetera.service'
 import { obtenerHistorial } from '../../services/portafolio.service'
 import Navbar from '../../components/Navbar'
@@ -51,33 +53,50 @@ function Billetera() {
 
   if (cargando) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-400">Cargando...</p>
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <p className="text-slate-500">Cargando...</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-950 text-white">
       <Navbar />
 
       <div className="max-w-2xl mx-auto px-6 py-8">
-        <h2 className="text-xl font-bold text-gray-800 mb-6">Billetera</h2>
+        <Link
+          to="/dashboard"
+          className="text-sm text-slate-400 hover:text-white transition-colors inline-block mb-4"
+        >
+          ← Volver al dashboard
+        </Link>
 
-        <div className="bg-white rounded-2xl p-8 shadow-sm mb-6">
-          <p className="text-sm text-gray-500 mb-1">Saldo disponible</p>
-          <p className="text-3xl font-bold text-gray-800 mb-6">
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-2xl font-bold mb-6"
+        >
+          Billetera
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 mb-6"
+        >
+          <p className="text-sm text-slate-400 mb-1">Saldo disponible</p>
+          <p className="text-3xl font-bold text-white mb-6">
             ${saldo?.toLocaleString('es-AR')}
           </p>
 
           {mensaje && (
-            <div className="bg-green-50 text-green-600 px-4 py-3 rounded-lg mb-4 text-sm">
+            <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-lg mb-4 text-sm">
               {mensaje}
             </div>
           )}
 
           {error && (
-            <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg mb-4 text-sm">
               {error}
             </div>
           )}
@@ -90,37 +109,37 @@ function Billetera() {
               value={monto}
               onChange={(e) => setMonto(e.target.value)}
               placeholder="Monto a cargar"
-              className="flex-1 border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
               required
             />
             <button
               type="submit"
               disabled={procesando}
-              className="bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors disabled:opacity-50"
+              className="bg-cyan-500 text-slate-950 px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-cyan-400 transition-colors disabled:opacity-50"
             >
               {procesando ? 'Cargando...' : 'Cargar saldo'}
             </button>
           </form>
-        </div>
+        </motion.div>
 
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100">
-            <h3 className="font-medium text-gray-800">Movimientos recientes</h3>
+        <div className="bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-800">
+            <h3 className="font-medium text-white">Movimientos recientes</h3>
           </div>
 
           {historial.length === 0 ? (
-            <p className="text-gray-500 text-sm px-6 py-8 text-center">
+            <p className="text-slate-500 text-sm px-6 py-8 text-center">
               No hay movimientos todavía.
             </p>
           ) : (
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-slate-800/50">
               {historial.slice(0, 10).map((orden) => (
-                <div key={orden.id} className="px-6 py-4 flex justify-between items-center">
+                <div key={orden.id} className="px-6 py-4 flex justify-between items-center hover:bg-slate-800/30 transition-colors">
                   <div>
-                    <p className="text-sm text-gray-800 capitalize">{orden.tipo}</p>
-                    <p className="text-xs text-gray-400">{orden.fecha} {orden.hora}</p>
+                    <p className="text-sm text-white capitalize">{orden.tipo}</p>
+                    <p className="text-xs text-slate-500">{orden.fecha} {orden.hora}</p>
                   </div>
-                  <p className={`text-sm font-medium ${orden.tipo === 'compra' ? 'text-red-500' : 'text-green-600'}`}>
+                  <p className={`text-sm font-medium ${orden.tipo === 'compra' ? 'text-red-400' : 'text-emerald-400'}`}>
                     {orden.tipo === 'compra' ? '-' : '+'}${(orden.precio_unitario * orden.cantidad).toLocaleString('es-AR')}
                   </p>
                 </div>
