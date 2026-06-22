@@ -5,6 +5,10 @@ from models.instrumento import Instrumento
 from models.admin import Administrador
 from schemas.orden import InstrumentoCreate
 from core.security import verificar_contrasenia, crear_token_acceso
+from models.representante_legal import RepresentanteLegal
+from models.orden import Orden
+from models.portafolio import Portafolio
+
 
 def iniciar_sesion_admin(email: str, contrasenia: str, db: Session):
     admin = db.query(Administrador).filter(Administrador.email == email).first()
@@ -57,4 +61,61 @@ def obtener_configuracion(db: Session):
     return {
         "token_parental_expire_hours": settings.TOKEN_PARENTAL_EXPIRE_HOURS,
         "resumen_semanal_activo": settings.RESUMEN_SEMANAL_ACTIVO
+    }
+
+def obtener_detalle_usuario(usuario_id: int, db: Session):
+    usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+    representante = db.query(RepresentanteLegal).filter(
+        RepresentanteLegal.usuario_id == usuario_id
+    ).first()
+
+    ordenes = db.query(Orden).filter(
+        Orden.usuario_id == usuario_id
+    ).order_by(Orden.id.desc()).all()
+    portafolio = db.query(Portafolio).filter(
+        Portafolio.usuario_id == usuario_id
+    ).first()
+
+    posiciones = []
+    if portafolio:
+        for pos in portafolio.posiciones:
+            posiciones.append({
+                "nombre": pos.instrumento.nombre,
+                "ticker": pos.instrumento.ticker,
+                "unidades": pos.unidades,
+                "precio_prom_compra": pos.precio_prom_compra,
+                "precio_actual": pos.instrumento.precio_actual
+            })
+    return {
+        "usuario": {
+            "id": usuario.id,
+            "nombre": usuario.nombre,
+            "apellido": usuario.apellido,
+            "dni": usuario.dni,
+            "email": usuario.email,
+            "fecha_nacimiento": usuario.fecha_nacimiento,
+            "estado_cuenta": usuario.estado_cuenta
+        },
+        "representante": {
+            "nombre": representante.nombre if representante else None,
+            "apellido": representante.apellido if representante else None,
+            "email": representante.email if representante else None
+        } if representante else None,
+        "historial": [
+            {
+                "id": o.id,
+                "tipo": o.tipo,
+                "cantidad": o.cantidad,
+                "precio_unitario": o.precio_unitario,
+                "fecha": o.fecha,
+                "hora": o.hora
+                } for o in ordenes
+        ],
+        "portafolio": {
+            "valor_total": portafolio.valor_total if portafolio else 0,
+            "posiciones": posiciones
+        }
     }
