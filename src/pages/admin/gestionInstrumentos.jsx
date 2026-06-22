@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import api from '../../services/api'
 import NavbarAdmin from '../../components/NavbarAdmin'
 
@@ -54,28 +55,40 @@ function GestionInstrumentos() {
   }
 
   if (cargando) {
-    return <p className="text-gray-400 p-8">Cargando...</p>
+    return <p className="text-slate-500 p-8 bg-black min-h-screen">Cargando...</p>
   }
 
+  const inputClass = "border border-slate-700 bg-slate-800/50 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black text-white">
       <NavbarAdmin />
 
       <div className="max-w-5xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-gray-800">Gestión de instrumentos</h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-xl font-bold"
+          >
+            Gestión de instrumentos
+          </motion.h2>
           <button
             onClick={() => setMostrarForm(!mostrarForm)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+            className="bg-cyan-500 text-slate-950 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-cyan-400 transition-colors"
           >
             {mostrarForm ? 'Cancelar' : '+ Nuevo instrumento'}
           </button>
         </div>
 
         {mostrarForm && (
-          <div className="bg-white rounded-2xl p-6 shadow-sm mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 mb-6"
+          >
             {error && (
-              <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">
+              <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg mb-4 text-sm">
                 {error}
               </div>
             )}
@@ -83,18 +96,18 @@ function GestionInstrumentos() {
               <input
                 name="nombre" placeholder="Nombre" value={nuevoInstrumento.nombre}
                 onChange={handleChange}
-                className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm"
+                className={inputClass}
                 required
               />
               <input
                 name="ticker" placeholder="Ticker" value={nuevoInstrumento.ticker}
                 onChange={handleChange}
-                className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm"
+                className={inputClass}
                 required
               />
               <select
                 name="tipo" value={nuevoInstrumento.tipo} onChange={handleChange}
-                className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm"
+                className={inputClass}
               >
                 <option value="FCI">FCI</option>
                 <option value="Bono">Bono</option>
@@ -103,7 +116,7 @@ function GestionInstrumentos() {
               </select>
               <select
                 name="perfil_minimo" value={nuevoInstrumento.perfil_minimo} onChange={handleChange}
-                className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm"
+                className={inputClass}
               >
                 <option value="conservador">Conservador</option>
                 <option value="moderado">Moderado</option>
@@ -111,22 +124,22 @@ function GestionInstrumentos() {
               <textarea
                 name="descripcion" placeholder="Descripción" value={nuevoInstrumento.descripcion}
                 onChange={handleChange}
-                className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm col-span-2"
+                className={`${inputClass} col-span-2`}
               />
               <button
                 type="submit"
-                className="bg-blue-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors col-span-2"
+                className="bg-cyan-500 text-slate-950 py-2.5 rounded-lg text-sm font-semibold hover:bg-cyan-400 transition-colors col-span-2"
               >
                 Crear instrumento
               </button>
             </form>
-          </div>
+          </motion.div>
         )}
 
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="text-left text-xs text-gray-500 border-b border-gray-100">
+              <tr className="text-left text-xs text-slate-500 border-b border-slate-800">
                 <th className="px-6 py-3">Nombre</th>
                 <th className="px-6 py-3">Tipo</th>
                 <th className="px-6 py-3">Perfil mínimo</th>
@@ -136,13 +149,13 @@ function GestionInstrumentos() {
             </thead>
             <tbody>
               {instrumentos.map((inst) => (
-                <tr key={inst.id} className="border-b border-gray-50 hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm text-gray-800">{inst.nombre}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{inst.tipo}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600 capitalize">{inst.perfil_minimo}</td>
+                <tr key={inst.id} className="border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors">
+                  <td className="px-6 py-4 text-sm text-white">{inst.nombre}</td>
+                  <td className="px-6 py-4 text-sm text-slate-300">{inst.tipo}</td>
+                  <td className="px-6 py-4 text-sm text-slate-300 capitalize">{inst.perfil_minimo}</td>
                   <td className="px-6 py-4">
                     <span className={`text-xs px-2 py-1 rounded-full ${
-                      inst.activo ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-500'
+                      inst.activo ? 'bg-emerald-500/10 text-emerald-400' : 'bg-slate-800 text-slate-500'
                     }`}>
                       {inst.activo ? 'Activo' : 'Inactivo'}
                     </span>
@@ -150,7 +163,7 @@ function GestionInstrumentos() {
                   <td className="px-6 py-4">
                     <button
                       onClick={() => toggleActivo(inst.id, inst.activo)}
-                      className="text-xs text-blue-600 hover:underline"
+                      className="text-xs text-cyan-400 hover:underline"
                     >
                       {inst.activo ? 'Desactivar' : 'Activar'}
                     </button>

@@ -12,9 +12,12 @@ function NavbarAdmin() {
   ]
 
   return (
-    <nav className="bg-gray-900 px-6 py-4">
+    <nav className="bg-black border-b border-slate-800 px-6 py-4">
       <div className="max-w-5xl mx-auto flex items-center justify-between">
-        <p className="text-lg font-bold text-white">NextVest Admin</p>
+        <p className="text-lg font-bold tracking-tight text-white">
+          Next<span className="text-cyan-400">Vest</span>
+          <span className="text-slate-500 font-normal text-sm ml-2">admin</span>
+        </p>
 
         <div className="flex items-center gap-6">
           {links.map((link) => (
@@ -23,8 +26,8 @@ function NavbarAdmin() {
               to={link.to}
               className={`text-sm transition-colors ${
                 location.pathname === link.to
-                  ? 'text-white font-medium'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'text-cyan-400 font-medium'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
               {link.label}

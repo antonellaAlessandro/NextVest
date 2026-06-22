@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import api from '../../services/api'
 import { useAuth } from '../../context/AuthContext'
+import FondoLR from '../../components/FondoLR'
 
 function AdminLogin() {
   const [email, setEmail] = useState('')
@@ -29,13 +31,22 @@ function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-2xl shadow-sm w-full max-w-md">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">Panel Admin</h1>
-        <p className="text-gray-500 mb-8">NextVest</p>
+    <div className="min-h-screen bg-black text-white flex items-center justify-center relative">
+      <FondoLR />
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 p-8 rounded-2xl w-full max-w-md relative z-10"
+      >
+        <p className="text-2xl font-bold tracking-tight mb-1">
+          Next<span className="text-cyan-400">Vest</span>
+        </p>
+        <p className="text-slate-400 mb-8">Panel administrativo</p>
 
         {error && (
-          <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-6 text-sm">
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg mb-6 text-sm">
             {error}
           </div>
         )}
@@ -46,7 +57,7 @@ function AdminLogin() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
             required
           />
           <input
@@ -54,18 +65,18 @@ function AdminLogin() {
             value={contrasenia}
             onChange={(e) => setContrasenia(e.target.value)}
             placeholder="Contraseña"
-            className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
             required
           />
           <button
             type="submit"
             disabled={cargando}
-            className="w-full bg-gray-800 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-900 transition-colors disabled:opacity-50"
+            className="w-full bg-cyan-500 text-slate-950 py-2.5 rounded-lg text-sm font-semibold hover:bg-cyan-400 transition-colors disabled:opacity-50"
           >
             {cargando ? 'Ingresando...' : 'Ingresar'}
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   )
 }
