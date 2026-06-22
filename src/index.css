@@ -2,3 +2,15 @@
 body {
   font-family: 'Inter', sans-serif;
 }
+@keyframes slide-lines {
+  from {
+    transform: translateX(0) translateY(0);
+  }
+  to {
+    transform: translateX(60px) translateY(60px);
+  }
+}
+
+.animate-slide-lines {
+  animation: slide-lines 6s linear infinite;
+}
