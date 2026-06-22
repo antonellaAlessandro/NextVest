@@ -5,6 +5,7 @@ from models.instrumento import Instrumento
 from models.admin import Administrador
 from schemas.orden import InstrumentoCreate
 from core.security import verificar_contrasenia, crear_token_acceso
+from external.yfinance_cliente import obtener_precio_actual
 
 def iniciar_sesion_admin(email: str, contrasenia: str, db: Session):
     admin = db.query(Administrador).filter(Administrador.email == email).first()
@@ -57,4 +58,29 @@ def obtener_configuracion(db: Session):
     return {
         "token_parental_expire_hours": settings.TOKEN_PARENTAL_EXPIRE_HOURS,
         "resumen_semanal_activo": settings.RESUMEN_SEMANAL_ACTIVO
+    }
+def actualizar_precios_mercado(db: Session):
+    """
+    Recorre todos los instrumentos de tipo Cedear y Accion,
+    y actualiza su precio_actual consultando yfinance.
+    """
+    instrumentos = db.query(Instrumento).filter(
+        Instrumento.tipo.in_(["Cedear", "Accion"]),
+        Instrumento.activo == True
+    ).all()
+
+    actualizados = []
+    fallidos = []
+    for inst in instrumentos:
+        precio = obtener_precio_actual(inst.ticker)
+        if precio is not None:
+            inst.precio_actual = precio
+            actualizados.append(inst.nombre)
+        else:
+            fallidos.append(inst.nombre)
+
+    db.commit()
+    return {
+        "actualizados": actualizados,
+        "fallidos": fallidos
     }

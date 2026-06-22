@@ -63,3 +63,9 @@ def obtener_configuracion(
     db: Session = Depends(obtener_db)
 ):
     return admin_service.obtener_configuracion(db)
+@router.post("/actualizar-precios")
+def actualizar_precios(
+    admin=Depends(obtener_admin_actual),
+    db: Session = Depends(obtener_db)
+):
+    return admin_service.actualizar_precios_mercado(db)
