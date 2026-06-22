@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { obtenerInstrumentos } from '../../services/mercado.service'
 import Navbar from '../../components/Navbar'
 import TarjetaInstrumento from '../../components/TarjetaInstrumento'
@@ -10,7 +11,6 @@ function Mercado() {
   const [instrumentos, setInstrumentos] = useState([])
   const [filtroTipo, setFiltroTipo] = useState('Todos')
   const [cargando, setCargando] = useState(true)
-  const navigate = useNavigate()
 
   useEffect(() => {
     async function cargarInstrumentos() {
@@ -29,41 +29,65 @@ function Mercado() {
   }, [filtroTipo])
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    <div className="min-h-screen bg-slate-950 text-white relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[300px] bg-cyan-500/5 blur-3xl rounded-full" />
 
-      <div className="max-w-4xl mx-auto px-6 py-8">
-        <h2 className="text-xl font-bold text-gray-800 mb-6">Mercado</h2>
+      <div className="relative z-10">
+        <Navbar />
 
-        <div className="flex gap-2 mb-6">
-          {TIPOS.map((tipo) => (
-            <button
-              key={tipo}
-              onClick={() => setFiltroTipo(tipo)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                filtroTipo === tipo
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              {tipo}
-            </button>
-          ))}
-        </div>
+        <div className="max-w-4xl mx-auto px-6 py-8">
+          <Link
+            to="/dashboard"
+            className="text-sm text-slate-400 hover:text-white transition-colors inline-block mb-4"
+          >
+            ← Volver al dashboard
+          </Link>
 
-        {cargando ? (
-          <p className="text-gray-400">Cargando instrumentos...</p>
-        ) : instrumentos.length === 0 ? (
-          <div className="bg-white rounded-2xl p-8 shadow-sm text-center">
-            <p className="text-gray-500">No hay instrumentos disponibles para tu perfil en este filtro.</p>
-          </div>
-        ) : (
-         <div className="grid grid-cols-2 gap-4">
-            {instrumentos.map((inst) => (
-                <TarjetaInstrumento key={inst.id} instrumento={inst} />
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-2xl font-bold mb-6"
+          >
+            Mercado
+          </motion.h2>
+
+          <div className="flex gap-2 mb-6">
+            {TIPOS.map((tipo) => (
+              <button
+                key={tipo}
+                onClick={() => setFiltroTipo(tipo)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  filtroTipo === tipo
+                    ? 'bg-cyan-500 text-slate-950'
+                    : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                }`}
+              >
+                {tipo}
+              </button>
             ))}
+          </div>
+
+          {cargando ? (
+            <p className="text-slate-500">Cargando instrumentos...</p>
+          ) : instrumentos.length === 0 ? (
+            <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 text-center">
+              <p className="text-slate-400">No hay instrumentos disponibles para tu perfil en este filtro.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-4">
+              {instrumentos.map((inst, index) => (
+                <motion.div
+                  key={inst.id}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <TarjetaInstrumento instrumento={inst} />
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
-        )}
       </div>
     </div>
   )
