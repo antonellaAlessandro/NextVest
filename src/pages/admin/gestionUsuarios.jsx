@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import api from '../../services/api'
 import NavbarAdmin from '../../components/NavbarAdmin'
+import { Link } from 'react-router-dom'
 
 function GestionUsuarios() {
   const [usuarios, setUsuarios] = useState([])
@@ -69,7 +70,11 @@ function GestionUsuarios() {
             <tbody>
               {usuarios.map((u) => (
                 <tr key={u.id} className="border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors">
-                  <td className="px-6 py-4 text-sm text-white">{u.nombre} {u.apellido}</td>
+                  <td className="px-6 py-4 text-sm text-white">
+                    <Link to={`/admin/usuarios/${u.id}`} className="hover:text-cyan-400 transition-colors">
+                        {u.nombre} {u.apellido}
+                    </Link>
+                  </td>
                   <td className="px-6 py-4 text-sm text-slate-300">{u.email}</td>
                   <td className="px-6 py-4">
                     <span className={`text-xs px-2 py-1 rounded-full capitalize ${

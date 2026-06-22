@@ -69,3 +69,11 @@ def actualizar_precios(
     db: Session = Depends(obtener_db)
 ):
     return admin_service.actualizar_precios_mercado(db)
+
+@router.get("/usuarios/{usuario_id}")
+def detalle_usuario(
+    usuario_id: int,
+    admin=Depends(obtener_admin_actual),
+    db: Session = Depends(obtener_db)
+):
+    return admin_service.obtener_detalle_usuario(usuario_id, db)
