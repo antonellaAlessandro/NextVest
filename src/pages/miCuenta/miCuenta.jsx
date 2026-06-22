@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import api from '../../services/api'
 import { actualizarPerfil, cambiarContrasenia, obtenerPerfil } from '../../services/usuario.service'
 import Navbar from '../../components/Navbar'
@@ -20,6 +21,9 @@ function MiCuenta() {
   const [errorContrasenia, setErrorContrasenia] = useState(null)
 
   const navigate = useNavigate()
+
+  const inputClass = "w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+  const labelClass = "block text-sm font-medium text-slate-300 mb-1.5"
 
   useEffect(() => {
     async function cargarDatos() {
@@ -71,30 +75,47 @@ function MiCuenta() {
 
   if (cargando) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-400">Cargando...</p>
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <p className="text-slate-500">Cargando...</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-950 text-white">
       <Navbar />
 
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
-        <h2 className="text-xl font-bold text-gray-800">Mi cuenta</h2>
+        <Link
+          to="/dashboard"
+          className="text-sm text-slate-400 hover:text-white transition-colors inline-block"
+        >
+          ← Volver al dashboard
+        </Link>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-2xl font-bold"
+        >
+          Mi cuenta
+        </motion.h2>
 
         {/* Datos personales */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm">
-          <h3 className="font-medium text-gray-800 mb-4">Datos personales</h3>
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8"
+        >
+          <h3 className="font-medium text-white mb-4">Datos personales</h3>
 
           {mensajeDatos && (
-            <div className="bg-green-50 text-green-600 px-4 py-3 rounded-lg mb-4 text-sm">
+            <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-lg mb-4 text-sm">
               {mensajeDatos}
             </div>
           )}
           {errorDatos && (
-            <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg mb-4 text-sm">
               {errorDatos}
             </div>
           )}
@@ -102,117 +123,132 @@ function MiCuenta() {
           <form onSubmit={handleActualizarDatos} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                <label className={labelClass}>Nombre</label>
                 <input
                   value={nombre}
                   onChange={(e) => setNombre(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={inputClass}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
+                <label className={labelClass}>Apellido</label>
                 <input
                   value={apellido}
                   onChange={(e) => setApellido(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={inputClass}
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label className={labelClass}>Email</label>
               <input
                 value={usuario.email}
                 disabled
-                className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm bg-gray-50 text-gray-400"
+                className="w-full bg-slate-800/30 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-500"
               />
             </div>
 
             <button
               type="submit"
-              className="bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+              className="bg-cyan-500 text-slate-950 px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-cyan-400 transition-colors"
             >
               Guardar cambios
             </button>
           </form>
-        </div>
+        </motion.div>
 
         {/* Cambiar contraseña */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm">
-          <h3 className="font-medium text-gray-800 mb-4">Cambiar contraseña</h3>
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8"
+        >
+          <h3 className="font-medium text-white mb-4">Cambiar contraseña</h3>
 
           {mensajeContrasenia && (
-            <div className="bg-green-50 text-green-600 px-4 py-3 rounded-lg mb-4 text-sm">
+            <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-lg mb-4 text-sm">
               {mensajeContrasenia}
             </div>
           )}
           {errorContrasenia && (
-            <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg mb-4 text-sm">
               {errorContrasenia}
             </div>
           )}
 
           <form onSubmit={handleCambiarContrasenia} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña actual</label>
+              <label className={labelClass}>Contraseña actual</label>
               <input
                 type="password"
                 value={contraseniaActual}
                 onChange={(e) => setContraseniaActual(e.target.value)}
-                className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClass}
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña nueva</label>
+              <label className={labelClass}>Contraseña nueva</label>
               <input
                 type="password"
                 value={contraseniaNueva}
                 onChange={(e) => setContraseniaNueva(e.target.value)}
-                className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClass}
                 required
               />
             </div>
             <button
               type="submit"
-              className="bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+              className="bg-cyan-500 text-slate-950 px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-cyan-400 transition-colors"
             >
               Cambiar contraseña
             </button>
           </form>
-        </div>
+        </motion.div>
 
         {/* Representante legal */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm">
-          <h3 className="font-medium text-gray-800 mb-4">Representante legal</h3>
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8"
+        >
+          <h3 className="font-medium text-white mb-4">Representante legal</h3>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <p className="text-gray-400 text-xs mb-1">Nombre completo</p>
-              <p className="text-gray-800">{representante?.nombre} {representante?.apellido}</p>
+              <p className="text-slate-500 text-xs mb-1">Nombre completo</p>
+              <p className="text-white">{representante?.nombre} {representante?.apellido}</p>
             </div>
             <div>
-              <p className="text-gray-400 text-xs mb-1">Email</p>
-              <p className="text-gray-800">{representante?.email}</p>
+              <p className="text-slate-500 text-xs mb-1">Email</p>
+              <p className="text-white">{representante?.email}</p>
             </div>
           </div>
-          <p className="text-xs text-gray-400 mt-4">
+          <p className="text-xs text-slate-500 mt-4">
             Estos datos son de solo lectura y no pueden modificarse.
           </p>
-        </div>
+        </motion.div>
 
         {/* Perfil de riesgo */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm">
-          <h3 className="font-medium text-gray-800 mb-2">Perfil de riesgo</h3>
-          <p className="text-sm text-gray-500 mb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8"
+        >
+          <h3 className="font-medium text-white mb-2">Perfil de riesgo</h3>
+          <p className="text-sm text-slate-400 mb-4">
             Podés repetir el cuestionario en cualquier momento.
           </p>
           <button
             onClick={() => navigate('/perfil-riesgo')}
-            className="text-sm text-blue-600 hover:underline"
+            className="text-sm text-cyan-400 hover:underline"
           >
             Repetir cuestionario →
           </button>
-        </div>
+        </motion.div>
       </div>
     </div>
   )
