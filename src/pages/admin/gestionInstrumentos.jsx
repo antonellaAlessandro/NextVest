@@ -8,6 +8,8 @@ function GestionInstrumentos() {
   const [cargando, setCargando] = useState(true)
   const [mostrarForm, setMostrarForm] = useState(false)
   const [error, setError] = useState(null)
+  const [actualizando, setActualizando] = useState(false)
+  const [mensajeActualizacion, setMensajeActualizacion] = useState(null)
 
   const [nuevoInstrumento, setNuevoInstrumento] = useState({
     nombre: '', ticker: '', tipo: 'FCI', descripcion: '', perfil_minimo: 'conservador'
@@ -54,6 +56,22 @@ function GestionInstrumentos() {
     }
   }
 
+  async function actualizarPrecios() {
+    setActualizando(true)
+    setMensajeActualizacion(null)
+    try {
+      const respuesta = await api.post('/admin/actualizar-precios')
+      setMensajeActualizacion(
+        `Actualizados: ${respuesta.data.actualizados.length} · Fallidos: ${respuesta.data.fallidos.length}`
+      )
+      cargarInstrumentos()
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setActualizando(false)
+    }
+  }
+
   if (cargando) {
     return <p className="text-slate-500 p-8 bg-black min-h-screen">Cargando...</p>
   }
@@ -73,13 +91,28 @@ function GestionInstrumentos() {
           >
             Gestión de instrumentos
           </motion.h2>
-          <button
-            onClick={() => setMostrarForm(!mostrarForm)}
-            className="bg-cyan-500 text-slate-950 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-cyan-400 transition-colors"
-          >
-            {mostrarForm ? 'Cancelar' : '+ Nuevo instrumento'}
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={actualizarPrecios}
+              disabled={actualizando}
+              className="border border-slate-700 text-slate-300 px-4 py-2 rounded-lg text-sm font-medium hover:border-cyan-500/30 hover:text-white transition-colors disabled:opacity-50"
+            >
+              {actualizando ? 'Actualizando...' : '↻ Actualizar precios'}
+            </button>
+            <button
+              onClick={() => setMostrarForm(!mostrarForm)}
+              className="bg-cyan-500 text-slate-950 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-cyan-400 transition-colors"
+            >
+              {mostrarForm ? 'Cancelar' : '+ Nuevo instrumento'}
+            </button>
+          </div>
         </div>
+
+        {mensajeActualizacion && (
+          <div className="bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 px-4 py-3 rounded-lg mb-6 text-sm">
+            {mensajeActualizacion}
+          </div>
+        )}
 
         {mostrarForm && (
           <motion.div
