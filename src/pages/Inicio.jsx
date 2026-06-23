@@ -66,7 +66,7 @@ function Inicio() {
           className="text-lg text-slate-400 max-w-xl mx-auto mb-10 leading-relaxed"
         >
           El primer broker educativo pensado para adolescentes de 13 a 17 años.
-          Operá con instrumentos financieros reales, con saldo virtual, en un
+          Operá con instrumentos financieros reales en un
           entorno 100% seguro.
         </motion.p>
 
@@ -167,7 +167,7 @@ function Inicio() {
           transition={{ duration: 0.5, delay: 0.15 }}
           className="text-lg text-slate-400 mt-2"
         >
-          Simple, directo, sin vueltas — todo lo que necesitás para empezar
+          Simple, directo, sin vueltas: todo lo que necesitás para empezar
           a invertir está a un clic.
         </motion.p>
       </div>
@@ -387,9 +387,7 @@ function Inicio() {
           ))}
         </div>
 
-        <p className="text-center text-xs text-slate-500 mt-8">
-          * Casos de uso ilustrativos
-        </p>
+    
       </div>
 
       {/* CTA final */}
@@ -427,8 +425,7 @@ function Inicio() {
                 Next<span className="text-cyan-400">Vest</span>
               </p>
               <p className="text-sm text-slate-500 leading-relaxed">
-                Broker digital educativo para menores de 13 a 17 años, en el marco
-                de la RG CNV 1091/2025.
+                Broker digital educativo para menores de 13 a 17 años
               </p>
             </div>
 
@@ -462,8 +459,7 @@ function Inicio() {
             <div>
               <p className="text-sm font-medium mb-4">Marco normativo</p>
               <p className="text-sm text-slate-500 leading-relaxed">
-                Regulado bajo RG CNV 1091/2025. No opera con dinero real,
-                criptomonedas ni instrumentos para inversores calificados.
+                Regulado bajo RG CNV 1091/2025. 
               </p>
             </div>
           </div>
@@ -472,9 +468,7 @@ function Inicio() {
             <p className="text-xs text-slate-500">
               NextVest © 2026 · Broker digital educativo
             </p>
-            <p className="text-xs text-slate-500">
-              Proyecto académico — Comisión ACT5AP
-            </p>
+            
           </div>
         </div>
       </footer>
