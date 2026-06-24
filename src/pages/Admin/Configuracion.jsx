@@ -66,9 +66,7 @@ function Configuracion() {
           </div>
         </motion.div>
 
-        <p className="text-xs text-slate-500 mt-4">
-          Estos valores se configuran desde el archivo .env del servidor.
-        </p>
+        
       </div>
     </div>
   )
