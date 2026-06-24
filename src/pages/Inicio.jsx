@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import FondoAurora from '../components/FondoAurora'
 
 function Inicio() {
   return (
-    <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
+    <div className="min-h-screen bg-slate-950 text-white overflow-hidden relative">
+        <FondoAurora />
       {/* Navbar */}
       <motion.nav
         initial={{ opacity: 0, y: -20 }}
