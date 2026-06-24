@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { obtenerPortafolio } from '../../services/portafolio.service'
 import { obtenerSaldo } from '../../services/billetera.service'
 import Navbar from '../../components/Navbar'
+import Skeleton from '../../components/Skeleton'
 
 function obtenerSaludo() {
   const hora = new Date().getHours()
@@ -37,12 +38,24 @@ function Dashboard() {
   }, [])
 
   if (cargando) {
-    return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-        <p className="text-slate-500">Cargando...</p>
+  return (
+    <div className="min-h-screen bg-slate-950 text-white">
+      <Navbar />
+      <div className="max-w-4xl mx-auto px-6 py-8">
+        <Skeleton className="h-8 w-48 mb-2" />
+        <Skeleton className="h-4 w-64 mb-6" />
+
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <Skeleton className="h-24" />
+          <Skeleton className="h-24" />
+          <Skeleton className="h-24" />
+        </div>
+
+        <Skeleton className="h-48" />
       </div>
-    )
-  }
+    </div>
+  )
+}
 
   return (
     <div className="min-h-screen bg-slate-950 text-white relative overflow-hidden">

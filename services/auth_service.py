@@ -122,3 +122,4 @@ def iniciar_sesion(datos: LoginIn, db: Session):
 
     token = crear_token_acceso({"sub": str(usuario.id), "rol": "menor"})
     return {"access_token": token, "token_type": "bearer", "rol": "menor"}
+

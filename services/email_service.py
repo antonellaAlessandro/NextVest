@@ -1,10 +1,8 @@
 from core.config import settings
 
 def enviar_autorizacion_parental(email_representante: str, nombre_menor: str, token_uuid: str):
-    link_aprobar = f"http://localhost:8000/auth/autorizar/{token_uuid}?accion=aprobar"
-    link_rechazar = f"http://localhost:8000/auth/autorizar/{token_uuid}?accion=rechazar"
-    
-    # TODO: reemplazar con SendGrid cuando tengas la API key
+    link_aprobar = f"http://localhost:5173/autorizar/{token_uuid}?accion=aprobar"
+    link_rechazar = f"http://localhost:5173/autorizar/{token_uuid}?accion=rechazar"
     print(f"[DEV] Email de autorización para: {email_representante}")
     print(f"[DEV] Menor: {nombre_menor}")
     print(f"[DEV] Aprobar: {link_aprobar}")

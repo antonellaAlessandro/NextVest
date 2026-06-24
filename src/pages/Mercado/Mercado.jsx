@@ -69,7 +69,7 @@ function Mercado() {
 
           {cargando ? (
             <p className="text-slate-500">Cargando instrumentos...</p>
-          ) : instrumentos.length === 0 ? (
+            ) : instrumentos.length === 0 ? (
             <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 text-center">
               <p className="text-slate-400">No hay instrumentos disponibles para tu perfil en este filtro.</p>
             </div>

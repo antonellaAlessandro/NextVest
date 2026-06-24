@@ -21,6 +21,7 @@ import AdminLogin from './pages/Admin/AdminLogin'
 import NotFound from './pages/NotFound'
 import Inicio from './pages/Inicio'
 import DetalleUsuario from './pages/Admin/DetalleUsuario'
+import Autorizar from './pages/Auth/Autorizar'
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       <Route path="/educacion" element={<Educacion />} />
       <Route path="/quienes-somos" element={<QuienesSomos />} />
       <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/autorizar/:uuid" element={<Autorizar />} />
 
       {/* Rutas privadas menor */}
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

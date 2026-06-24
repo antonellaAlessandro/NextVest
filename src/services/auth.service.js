@@ -14,3 +14,7 @@ export async function reenviarToken(email) {
   const respuesta = await api.post(`/auth/reenviar-token?email=${email}`)
   return respuesta.data
 }
+export async function autorizarCuenta(uuid, accion) {
+  const respuesta = await api.get(`/auth/autorizar/${uuid}?accion=${accion}`)
+  return respuesta.data
+}
