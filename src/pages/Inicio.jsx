@@ -6,7 +6,7 @@ function Inicio() {
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden relative">
         <FondoAurora />
-      {/* Navbar */}
+    
       <motion.nav
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -37,7 +37,7 @@ function Inicio() {
         </div>
       </motion.nav>
 
-      {/* Hero */}
+    
       <div className="max-w-4xl mx-auto px-6 py-32 text-center relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-cyan-500/10 blur-3xl rounded-full -z-10" />
 
@@ -93,7 +93,6 @@ function Inicio() {
         </motion.div>
       </div>
 
-      {/* Mockup flotante */}
       <motion.div
         initial={{ opacity: 0, y: 60, rotateX: 10 }}
         animate={{ opacity: 1, y: 0, rotateX: 0 }}
@@ -151,7 +150,6 @@ function Inicio() {
         </div>
       </motion.div>
 
-      {/* Frase puente */}
       <div className="text-center max-w-2xl mx-auto px-6 mb-24">
         <motion.p
           initial={{ opacity: 0, y: 15 }}
@@ -160,7 +158,7 @@ function Inicio() {
           transition={{ duration: 0.5 }}
           className="text-2xl md:text-3xl font-semibold text-white leading-snug"
         >
-          Así se ve por dentro.
+          Así se ve por dentro
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: 15 }}
@@ -200,7 +198,6 @@ function Inicio() {
         </div>
       </div>
 
-      {/* Gráfico de crecimiento */}
       <div className="border-y border-slate-800/50 bg-slate-900/30">
         <div className="max-w-4xl mx-auto px-6 py-24">
           <motion.div
@@ -392,7 +389,6 @@ function Inicio() {
     
       </div>
 
-      {/* CTA final */}
       <div className="max-w-4xl mx-auto px-6 py-20">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -407,7 +403,7 @@ function Inicio() {
             Empezá a invertir hoy
           </h2>
           <p className="text-slate-400 mb-8 max-w-md mx-auto relative z-10">
-            Sin riesgo, sin dinero real, con todo lo que necesitás para aprender de verdad.
+            Mercado real, decisiones reales. Empezá a entender cómo invertir de verdad.
           </p>
           <Link
             to="/registro"
