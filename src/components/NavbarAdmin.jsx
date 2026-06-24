@@ -1,15 +1,21 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 function NavbarAdmin() {
   const { cerrarSesion } = useAuth()
   const location = useLocation()
+  const navigate = useNavigate()
 
   const links = [
     { to: '/admin/usuarios', label: 'Usuarios' },
     { to: '/admin/instrumentos', label: 'Instrumentos' },
     { to: '/admin/configuracion', label: 'Configuración' }
   ]
+
+  function handleCerrarSesion() {
+  navigate('/')
+  cerrarSesion()
+}
 
   return (
     <nav className="bg-black border-b border-slate-800 px-6 py-4">
@@ -34,7 +40,7 @@ function NavbarAdmin() {
             </Link>
           ))}
           <button
-            onClick={cerrarSesion}
+            onClick={handleCerrarSesion}
             className="text-sm text-red-400 hover:text-red-300 transition-colors"
           >
             Cerrar sesión
